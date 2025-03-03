@@ -17,7 +17,7 @@ function App() {
   const calcularVenda = async (dados) => {
     setErro(null);
     try {
-      const response = await fetch("http://localhost:8080/calcular-venda", {
+      const response = await fetch("https://calculadora-boi-production.up.railway.app/calcular-venda", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(dados),
@@ -45,7 +45,7 @@ function App() {
 
     setErro(null);
     try {
-      const response = await fetch("http://localhost:8080/calcular-sobra", {
+      const response = await fetch("https://calculadora-boi-production.up.railway.app/calcular-sobra", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...estoque, venda: resultado }),
