@@ -59,26 +59,25 @@ function App() {
       <h1 className="text-4xl font-bold text-gray-800 mb-4">NELORAVE</h1>
       <h2 className="text-2xl font-semibold text-gray-700 mb-6">Calculadora de Bois</h2>
 
-      {/* Formulário de Venda */}
-      <Formulario onCalcular={calcularVenda} />
-      
-      {/* Exibir Resultados Venda */}
-      <Resultado titulo="Resultado da Venda" resultado={resultado} />
-      
-      {/* Formulário de Estoque */}
-      <EstoqueForm estoque={estoque} setEstoque={setEstoque} />
+      {/* Seção de Vendas */}
+      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg mb-6">
+        <h3 className="text-xl font-semibold text-gray-800 mb-4 text-center">Entrada de Vendas</h3>
+        <Formulario onCalcular={calcularVenda} />
+        <Resultado titulo="Resultado da Venda" resultado={resultado} />
+      </div>
 
-      {/* Botão para calcular sobra */}
-      <button 
-        className="w-full max-w-md bg-red-500 text-white px-4 py-3 rounded-lg hover:bg-red-600 active:scale-95 transition shadow-md hover:shadow-lg"
-        onClick={calcularSobra}
+      {/* Seção de Estoque */}
+      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg">
+        <h3 className="text-xl font-semibold text-gray-800 mb-4 text-center">Entrada de Estoque</h3>
+        <EstoqueForm estoque={estoque} setEstoque={setEstoque} />
+        <button 
+          className="w-full bg-red-500 text-white px-4 py-3 rounded-lg hover:bg-red-600 active:scale-95 transition shadow-md hover:shadow-lg"
+          onClick={calcularSobra}
         >
-        Calcular Sobra
-      </button>
-
-
-      {/* Exibir Resultados Sobra */}
-      <Resultado titulo="Sobra no Estoque" resultado={sobra} />
+          Calcular Sobra
+        </button>
+        <Resultado titulo="Sobra no Estoque" resultado={sobra} />
+      </div>
 
       {/* Exibir erro, se houver */}
       {erro && <p className="text-red-600 mt-4">{erro}</p>}
