@@ -1,0 +1,9 @@
+[build]
+  base = "" # Deixe vazio se os arquivos já estão na raiz
+  publish = "dist"
+  command = "npm install && npm run build"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
