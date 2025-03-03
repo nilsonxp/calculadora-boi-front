@@ -1,16 +1,23 @@
 import { useState } from "react";
-import InputField from "./InputField"; // Importando o novo componente de input
+import InputField from "./InputField";
 
 function Formulario({ onCalcular }) {
-  const [dados, setDados] = useState({ bois: 0, bandas: 0, dianteiros: 0, traseiros: 0 });
+  const [dados, setDados] = useState({ bois: "", bandas: "", dianteiros: "", traseiros: "" });
 
   const handleChange = (e) => {
-    setDados({ ...dados, [e.target.name]: Number(e.target.value) });
+    const { name, value } = e.target;
+    setDados((prev) => ({
+      ...prev,
+      [name]: value, // Mantém vazio sem converter para número
+    }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onCalcular(dados);
+    const dadosConvertidos = Object.fromEntries(
+      Object.entries(dados).map(([key, val]) => [key, val === "" ? 0 : Number(val)])
+    );
+    onCalcular(dadosConvertidos);
   };
 
   return (

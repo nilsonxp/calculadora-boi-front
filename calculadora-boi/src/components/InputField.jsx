@@ -12,7 +12,7 @@ function InputField({ name, value, onChange }) {
         />
         <label 
           htmlFor={name} 
-          className="absolute left-2 top-12 text-gray-500 text-sm transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-focus:top-1 peer-focus:text-sm peer-focus:text-blue-500">
+          className="absolute left-1 top-13 text-gray-500 text-sm transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-focus:top-1 peer-focus:text-sm peer-focus:text-blue-500">
           {name.charAt(0).toUpperCase() + name.slice(1)}
         </label>
       </div>

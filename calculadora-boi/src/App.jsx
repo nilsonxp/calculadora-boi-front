@@ -5,7 +5,7 @@ import Resultado from "./components/Resultado";
 
 function App() {
   const [resultado, setResultado] = useState(null);
-  const [estoque, setEstoque] = useState({ bois: 0, bandas: 0, dianteiros: 0, traseiros: 0 });
+  const [estoque, setEstoque] = useState({ bois: "", bandas: "", dianteiros: "", traseiros: "" });
   const [sobra, setSobra] = useState(null);
   const [erro, setErro] = useState(null);
 
@@ -56,8 +56,15 @@ function App() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-200 p-6">
-      <h1 className="text-4xl font-bold text-gray-800 mb-4">NELORAVE</h1>
-      <h2 className="text-2xl font-semibold text-gray-700 mb-6">Calculadora de Bois</h2>
+      {/* Faixa verde com "NELORAVE" */}
+      <header className="w-full bg-green-500 py-3 flex justify-center fixed top-0 left-0 z-50 shadow-md">
+        <h1 className="text-3xl font-bold text-white">NELORAVE</h1>
+      </header>
+  
+      {/* Criando um espaçamento automático entre os elementos */}
+      <div className="flex flex-col items-center w-full max-w-lg my-2 pt-10">
+        <h2 className="text-2xl font-semibold text-gray-700 text-center">Calculadora de Bois</h2>
+      </div>
 
       {/* Seção de Vendas */}
       <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg mb-6">
@@ -65,7 +72,7 @@ function App() {
         <Formulario onCalcular={calcularVenda} />
         <Resultado titulo="Resultado da Venda" resultado={resultado} />
       </div>
-
+  
       {/* Seção de Estoque */}
       <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg">
         <h3 className="text-xl font-semibold text-gray-800 mb-4 text-center">Entrada de Estoque</h3>
@@ -78,9 +85,14 @@ function App() {
         </button>
         <Resultado titulo="Sobra no Estoque" resultado={sobra} />
       </div>
-
+  
       {/* Exibir erro, se houver */}
       {erro && <p className="text-red-600 mt-4">{erro}</p>}
+
+      {/* 🔽 Rodapé na parte inferior 🔽 */}
+      <footer className="w-full bg-gray-800 py-3 text-center fixed bottom-0 left-0">
+        <p className="text-white text-sm">Desenvolvido por <strong>Evox Tech</strong> 🚀</p>
+      </footer>
     </div>
   );
 }
