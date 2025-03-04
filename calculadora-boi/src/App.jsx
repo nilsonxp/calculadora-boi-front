@@ -87,17 +87,24 @@ function App() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-200 p-6">
       {/* Faixa verde com "NELORAVE" */}
-      <header className="w-full bg-green-500 py-3 flex justify-between items-center px-6 fixed top-0 left-0 z-50 shadow-md">
+      <header className="w-full bg-green-500 py-3 flex justify-center items-center fixed top-0 left-0 z-50 shadow-md">
         <h1 className="text-3xl font-bold text-white">NELORAVE</h1>
+      </header>
 
-        {/* Botão de atualizar */}
+      {/* Subheader abaixo do header principal */}
+      <div className="w-full bg-green-400 py-1 px-5 flex justify-between items-center fixed top-[60px] left-0 z-40 shadow-md">
+        <h2 className="text-lg font-semibold text-white">Calculadora</h2>
+
+        {/* Botão de resetar no subheader */}
         <button 
-          className="bg-white text-green-600 font-semibold px-4 py-2 rounded-lg hover:bg-gray-200 transition"
-          onClick={() => window.location.reload()}
-        >
+          className="bg-white text-green-600 font-semibold px-2 py-0.5 rounded-lg text-sm hover:bg-gray-200 transition flex items-center gap-1"
+          onClick={() => window.location.reload()}>
           🔄 Limpar
         </button>
-      </header>
+      </div>
+
+      {/* Aumentando o espaçamento para evitar sobreposição */}
+      <div className="pt-32"></div>
 
       {/* Seção de Vendas */}
       <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg mb-6">
