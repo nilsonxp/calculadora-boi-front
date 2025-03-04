@@ -79,3 +79,15 @@ button:focus-visible {
 label, span {
   pointer-events: none;
 }
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-8px); } /* Aumentei o deslocamento */
+  50% { transform: translateX(8px); }
+  75% { transform: translateX(-8px); }
+  100% { transform: translateX(0); }
+}
+
+.shake {
+  animation: shake 0.4s ease-in-out; /* Aumentei a duração para 0.4s */
+}

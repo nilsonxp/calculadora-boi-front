@@ -8,6 +8,9 @@ function App() {
   const [estoque, setEstoque] = useState({ bois: "", bandas: "", dianteiros: "", traseiros: "" });
   const [sobra, setSobra] = useState(null);
   const [erro, setErro] = useState(null);
+  const [shake, setShake] = useState(false); // Estado para ativar a animação
+  const [erroVenda, setErroVenda] = useState(null); // Novo estado para erros da venda
+  const [erroSobra, setErroSobra] = useState(null); // Novo estado para erros da sobra
   
   // Referências para os resultados (venda e sobra)
   const resultadoRef = useRef(null);
@@ -15,64 +18,82 @@ function App() {
 
   // Função para calcular venda
   const calcularVenda = async (dados) => {
-    setErro(null);
+    setErroVenda(null);
     try {
       const response = await fetch("https://calculadora-boi-production.up.railway.app/calcular-venda", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(dados),
       });
-
+  
       if (!response.ok) throw new Error(`Erro ao calcular venda: ${response.status}`);
-
+  
       const result = await response.json();
+  
+      if (result.erro) { // Caso a API retorne erro (ex: valores inválidos)
+        setErroVenda(result.erro);
+        return;
+      }
+  
       setResultado(result);
-
+  
       // Scroll para o resultado
       setTimeout(() => resultadoRef.current?.scrollIntoView({ behavior: "smooth" }), 300);
     } catch (error) {
       console.error(error);
-      setErro("Erro ao calcular venda. Tente novamente.");
+      setErroVenda("Erro ao calcular venda. Tente novamente.");
     }
-  };
-
+  };  
+  
   // Função para calcular sobra de estoque
   const calcularSobra = async () => {
     if (!resultado) {
-      setErro("Calcule a venda antes de calcular a sobra.");
+      setErroSobra("Calcule a venda antes de calcular a sobra.");
+      setShake(true);
+      setTimeout(() => setShake(false), 500);
       return;
     }
-
-    setErro(null);
+  
+    setErroSobra(null);
     try {
       const response = await fetch("https://calculadora-boi-production.up.railway.app/calcular-sobra", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...estoque, venda: resultado }),
       });
-
+  
       if (!response.ok) throw new Error(`Erro ao calcular sobra: ${response.status}`);
-
+  
       const result = await response.json();
+  
+      if (result.erro) { // Caso a API retorne erro
+        setErroSobra(result.erro);
+        setShake(true);
+        setTimeout(() => setShake(false), 500);
+        return;
+      }
+  
       setSobra(result);
-
-      // Scroll para o resultado da sobra
       setTimeout(() => sobraRef.current?.scrollIntoView({ behavior: "smooth" }), 300);
     } catch (error) {
       console.error(error);
-      setErro("Erro ao calcular sobra. Tente novamente.");
+      setErroSobra("Erro ao calcular sobra. Tente novamente.");
+      setShake(true);
+      setTimeout(() => setShake(false), 500);
     }
-  };
+  };  
 
-  // Na função limparDados
   const limparDados = () => {
-    // Corrija para usar setDados (que não existia antes)
-    setDados({ bois: "", bandas: "", dianteiros: "", traseiros: "" });  // Limpa o formulário de venda
-    setEstoque({ bois: "", bandas: "", dianteiros: "", traseiros: "" }); // Limpa o estoque inicial
     setResultado(null);  // Reseta o resultado da venda
     setSobra(null);      // Reseta o resultado da sobra
-    setErro(null);       // Remove qualquer mensagem de erro
-};
+    setErroVenda(null);  // Remove erros da venda
+    setErroSobra(null);  // Remove erros da sobra
+    setShake(false);     // Remove o efeito de tremor se houver erro ativo
+  
+    // Reseta os inputs do formulário de estoque e vendas
+    setEstoque({ bois: "", bandas: "", dianteiros: "", traseiros: "" });
+  };
+  
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-200 p-6">
@@ -89,14 +110,18 @@ function App() {
       {/* Seção de Vendas */}
       <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg mb-6">
         <h3 className="text-xl font-semibold text-blue-800 mb-4 text-center">Entrada de Vendas</h3>
-        <div ref={resultadoRef}> {/* Referência para o resultado */}
-        <Formulario onCalcular={calcularVenda} />
+        <div ref={resultadoRef}> {/* Referência para o resultado */}  
+          <Formulario onCalcular={calcularVenda} />
         </div>
-          <Resultado titulo="Resultado da Venda" resultado={resultado} />
+        
+        {/* Mensagem de erro específica para cálculo de venda */}
+        {erroVenda && <p className="text-red-600 mt-2 text-center">{erroVenda}</p>}
+
+        <Resultado titulo="Resultado da Venda" resultado={resultado} />
       </div>
 
       {/* Seção de Estoque */}
-      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg">
+      <div className={`bg-white p-6 rounded-lg shadow-lg w-full max-w-lg ${shake ? "shake" : ""}`}>
         <h3 className="text-xl font-semibold text-red-800 mb-4 text-center">Entrada de Estoque</h3>
         <EstoqueForm estoque={estoque} setEstoque={setEstoque} />
         <button 
@@ -105,6 +130,10 @@ function App() {
         >
           Calcular Sobra
         </button>
+        
+        {/* Mensagem de erro específica para cálculo de sobra */}
+        {erroSobra && <p className="text-red-600 mt-2 text-center">{erroSobra}</p>}
+
         <div ref={sobraRef}> {/* Referência para o resultado da sobra */}
           <Resultado titulo="Sobra no Estoque" resultado={sobra} />
         </div>
@@ -119,7 +148,7 @@ function App() {
       </button>
 
       {/* Exibir erro, se houver */}
-      {erro && <p className="text-red-600 mt-4 mb-5">{erro}</p>}
+      {erro && <p className={`text-red-600 mt-4 mb-5 ${shake ? "shake" : ""}`}>{erro}</p>}
 
       {/* Rodapé na parte inferior */}
       <footer className="w-full bg-gray-800 py-3 text-center fixed bottom-0 left-">
