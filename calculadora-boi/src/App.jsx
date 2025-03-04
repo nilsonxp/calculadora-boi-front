@@ -87,8 +87,16 @@ function App() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-200 p-6">
       {/* Faixa verde com "NELORAVE" */}
-      <header className="w-full bg-green-500 py-3 flex justify-center fixed top-0 left-0 z-50 shadow-md">
+      <header className="w-full bg-green-500 py-3 flex justify-between items-center px-6 fixed top-0 left-0 z-50 shadow-md">
         <h1 className="text-3xl font-bold text-white">NELORAVE</h1>
+
+        {/* Botão de atualizar */}
+        <button 
+          className="bg-white text-green-600 font-semibold px-4 py-2 rounded-lg hover:bg-gray-200 transition"
+          onClick={() => window.location.reload()}
+        >
+          🔄 Limpar
+        </button>
       </header>
 
       {/* Seção de Vendas */}
