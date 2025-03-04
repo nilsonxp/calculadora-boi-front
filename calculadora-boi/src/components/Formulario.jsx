@@ -8,7 +8,7 @@ function Formulario({ onCalcular }) {
     const { name, value } = e.target;
     setDados((prev) => ({
       ...prev,
-      [name]: value, // Mantém vazio sem converter para número
+      [name]: value,
     }));
   };
 
@@ -21,10 +21,7 @@ function Formulario({ onCalcular }) {
   };
 
   return (
-    <form 
-      onSubmit={handleSubmit} 
-      className="space-y-4 flex flex-col items-center bg-white p-6 rounded-lg shadow-lg w-full max-w-lg"
-    >
+    <form onSubmit={handleSubmit} className="space-y-4 flex flex-col items-center bg-white p-6 rounded-lg shadow-lg w-full max-w-lg">
       <div className="grid grid-cols-2 gap-4 w-full">
         {["bois", "bandas", "dianteiros", "traseiros"].map((campo) => (
           <InputField 
@@ -37,7 +34,8 @@ function Formulario({ onCalcular }) {
       </div>
 
       <button
-        className="w-full bg-blue-500 text-white px-4 py-3 rounded-lg hover:bg-blue-600 active:scale-95 transition shadow-md hover:shadow-lg">
+        className="w-full bg-blue-500 text-white px-4 py-3 rounded-lg hover:bg-blue-600 active:scale-95 transition shadow-md hover:shadow-lg mt-4"
+      >
         Calcular Venda
       </button>
     </form>
