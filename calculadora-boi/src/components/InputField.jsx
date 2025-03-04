@@ -1,4 +1,8 @@
+import React from 'react';
+
 function InputField({ name, value, onChange }) {
+    const capitalizedName = name.charAt(0).toUpperCase() + name.slice(1);
+    
     return (
       <div className="relative w-full">
         <input 
@@ -7,17 +11,16 @@ function InputField({ name, value, onChange }) {
           id={name}
           value={value}
           onChange={onChange}
-          placeholder=" "
-          className="peer p-3 w-full border border-gray-300 rounded-lg bg-white text-gray-800 text-center shadow-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          placeholder={` ${capitalizedName}`}
+          className="p-3 w-full border border-gray-300 rounded-lg bg-white text-gray-800 text-center shadow-md focus:ring-2 focus:ring-blue-500 focus:outline-none pt-6"
         />
-        <label 
-          htmlFor={name} 
-          className="absolute left-1 top-13 text-gray-500 text-sm transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-focus:top-1 peer-focus:text-sm peer-focus:text-blue-500">
-          {name.charAt(0).toUpperCase() + name.slice(1)}
-        </label>
+        {value !== "" && (
+          <div className="absolute top-1 left-0 w-full text-center text-xs text-gray-500">
+            {capitalizedName}
+          </div>
+        )}
       </div>
     );
-  }
+}
   
-  export default InputField;
-  
+export default InputField;

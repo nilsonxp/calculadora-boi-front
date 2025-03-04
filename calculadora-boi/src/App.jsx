@@ -64,14 +64,15 @@ function App() {
     }
   };
 
-  // 🔽 Função para limpar os dados
+  // Na função limparDados
   const limparDados = () => {
+    // Corrija para usar setDados (que não existia antes)
     setDados({ bois: "", bandas: "", dianteiros: "", traseiros: "" });  // Limpa o formulário de venda
     setEstoque({ bois: "", bandas: "", dianteiros: "", traseiros: "" }); // Limpa o estoque inicial
     setResultado(null);  // Reseta o resultado da venda
     setSobra(null);      // Reseta o resultado da sobra
     setErro(null);       // Remove qualquer mensagem de erro
-  };
+};
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-200 p-6">

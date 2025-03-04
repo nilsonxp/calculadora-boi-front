@@ -40,3 +40,14 @@
 .read-the-docs {
   color: #888;
 }
+
+/* No final do seu App.css */
+* {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* Previne eventos em labels e elementos que possam interferir */
+label, span {
+  pointer-events: none;
+}

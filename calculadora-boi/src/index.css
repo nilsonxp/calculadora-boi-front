@@ -68,3 +68,14 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+/* No final do seu App.css */
+* {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* Previne eventos em labels e elementos que possam interferir */
+label, span {
+  pointer-events: none;
+}
