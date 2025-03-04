@@ -56,17 +56,21 @@ function App() {
   
     setErroSobra(null);
     try {
+      const estoqueConvertido = Object.fromEntries(
+        Object.entries(estoque).map(([key, val]) => [key, val === "" ? 0 : Number(val)])
+      );
+  
       const response = await fetch("https://calculadora-boi-production.up.railway.app/calcular-sobra", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...estoque, venda: resultado }),
+        body: JSON.stringify({ ...estoqueConvertido, venda: resultado }),
       });
   
       if (!response.ok) throw new Error(`Erro ao calcular sobra: ${response.status}`);
   
       const result = await response.json();
   
-      if (result.erro) { // Caso a API retorne erro
+      if (result.erro) {
         setErroSobra(result.erro);
         setShake(true);
         setTimeout(() => setShake(false), 500);
